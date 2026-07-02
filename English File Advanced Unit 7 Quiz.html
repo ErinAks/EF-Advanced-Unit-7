@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English File Advanced — Unit 7 Quiz</title>
+<style>
+  :root {
+    --teal: #1b8a8a;
+    --teal-dark: #146b6b;
+    --orange: #e8842c;
+    --green: #2e9e5b;
+    --red: #d9534f;
+    --bg: #f4f6f6;
+    --card: #ffffff;
+    --text: #24333a;
+    --muted: #6b7a80;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: 32px 16px;
+  }
+  .app {
+    width: 100%;
+    max-width: 640px;
+  }
+  header.top {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  header.top .badge {
+    display: inline-block;
+    background: var(--teal);
+    color: white;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+  }
+  header.top h1 {
+    margin: 0;
+    font-size: 26px;
+  }
+  header.top p {
+    color: var(--muted);
+    margin: 6px 0 0;
+    font-size: 14px;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    padding: 28px;
+  }
+  .section-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px 0;
+  }
+  .section-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1.5px solid #e0e6e6;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+  }
+  .section-option:hover { border-color: var(--teal); }
+  .section-option input { width: 18px; height: 18px; accent-color: var(--teal); }
+  .section-option .label { font-weight: 600; font-size: 14.5px; }
+  .section-option .sub { color: var(--muted); font-size: 12.5px; display:block; margin-top:2px; }
+  button.primary {
+    background: var(--teal);
+    color: white;
+    border: none;
+    padding: 13px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 8px;
+    transition: background .15s;
+  }
+  button.primary:hover { background: var(--teal-dark); }
+  button.secondary {
+    background: transparent;
+    color: var(--teal);
+    border: 1.5px solid var(--teal);
+    padding: 11px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .progress-bar {
+    height: 6px;
+    background: #e6ecec;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 22px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--teal);
+    transition: width .25s;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .tag.grammar { background: #e8f3ff; color: #1e6fbf; }
+  .tag.vocab { background: #fff1e3; color: var(--orange); }
+  .q-text {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    text-align: left;
+    padding: 13px 16px;
+    border: 1.5px solid #e0e6e6;
+    border-radius: 10px;
+    background: white;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all .12s;
+  }
+  .option:hover { border-color: var(--teal); }
+  .option.selected { border-color: var(--teal); background: #eefaf9; }
+  .option.correct { border-color: var(--green); background: #eaf7ee; color: #1c6b3a; font-weight: 600; }
+  .option.incorrect { border-color: var(--red); background: #fdecec; color: #a53431; font-weight: 600; }
+  .option:disabled { cursor: default; }
+  input.fill-input {
+    width: 100%;
+    padding: 13px 16px;
+    border: 1.5px solid #e0e6e6;
+    border-radius: 10px;
+    font-size: 15px;
+    font-family: inherit;
+  }
+  input.fill-input:focus { outline: none; border-color: var(--teal); }
+  input.fill-input.correct { border-color: var(--green); background: #eaf7ee; }
+  input.fill-input.incorrect { border-color: var(--red); background: #fdecec; }
+  .feedback {
+    margin-top: 16px;
+    padding: 13px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .feedback.correct { background: #eaf7ee; color: #1c6b3a; }
+  .feedback.incorrect { background: #fdecec; color: #a53431; }
+  .feedback b { display: block; margin-bottom: 3px; }
+  .nav-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .hidden { display: none !important; }
+  .result-score {
+    text-align: center;
+    margin: 10px 0 24px;
+  }
+  .result-score .big {
+    font-size: 48px;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .result-score .of { color: var(--muted); font-size: 15px; }
+  .breakdown { display: flex; flex-direction: column; gap: 10px; margin-bottom: 10px; }
+  .breakdown-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    background: #f7f9f9;
+    border-radius: 8px;
+    font-size: 13.5px;
+  }
+  .breakdown-row .pct { font-weight: 700; color: var(--teal); }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="badge">ENGLISH FILE · 4th ED · ADVANCED</div>
+    <h1>Unit 7 Quiz</h1>
+    <p>"As a matter of fact…" &amp; "A masterpiece?"</p>
+  </header>
+
+  <div class="card" id="setup-screen">
+    <p style="margin-top:0; font-size:14.5px; color:var(--muted);">Choose which parts of Unit 7 to practise:</p>
+    <div class="section-list" id="section-list"></div>
+    <button class="primary" id="start-btn">Start Quiz</button>
+  </div>
+
+  <div class="card hidden" id="quiz-screen">
+    <div class="progress-wrap">
+      <span id="progress-label">Question 1 of 8</span>
+      <span id="score-label">Score: 0</span>
+    </div>
+    <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+    <div id="tag" class="tag grammar">Grammar</div>
+    <div class="q-text" id="q-text"></div>
+    <div id="answer-area"></div>
+    <div id="feedback-area"></div>
+    <div class="nav-row">
+      <button class="primary" id="check-btn">Check Answer</button>
+      <button class="primary hidden" id="next-btn">Next →</button>
+    </div>
+  </div>
+
+  <div class="card hidden" id="result-screen">
+    <div class="result-score">
+      <div class="big" id="final-score">0/0</div>
+      <div class="of" id="final-pct">0% correct</div>
+    </div>
+    <div class="breakdown" id="breakdown"></div>
+    <button class="primary" id="retry-wrong-btn">Retry Incorrect Questions</button>
+    <button class="secondary" id="restart-btn">Start Over</button>
+  </div>
+
+  <footer>Source: English File 4th edition, Advanced Student's Book — Unit 7</footer>
+</div>
+
+<script>
+const QUESTIONS = [
+  // ---- Grammar: permission, obligation & necessity ----
+  { section: 'gram1', type: 'mc',
+    q: 'Photography ___ inside the museum — you\'ll be asked to leave if you\'re caught.',
+    options: ["isn't permitted", "don't have to", "needn't", "'d better"],
+    answer: 0,
+    explain: "\"isn't permitted\" expresses a rule/prohibition. The others don't fit a formal ban." },
+  { section: 'gram1', type: 'mc',
+    q: 'You ___ hurry — we\'ve got plenty of time before the flight.',
+    options: ["mustn't", "needn't", "aren't allowed to", "ought"],
+    answer: 1,
+    explain: "\"needn't\" = it isn't necessary. \"mustn't\" would wrongly mean it's prohibited." },
+  { section: 'gram1', type: 'mc',
+    q: 'Which sentence is closest in meaning to "It is compulsory to wear a seatbelt"?',
+    options: ["You don't have to wear a seatbelt.", "You must wear a seatbelt.", "You needn't wear a seatbelt.", "You'd better not wear a seatbelt."],
+    answer: 1,
+    explain: "\"Compulsory\" = obligatory, matching \"must\"." },
+  { section: 'gram1', type: 'mc',
+    q: 'We ___ left home so early — the traffic was much lighter than we expected.',
+    options: ["needn't have", "didn't have to", "mustn't have", "weren't allowed to"],
+    answer: 0,
+    explain: "\"needn't have + past participle\" = we did it, but it turned out to be unnecessary." },
+  { section: 'gram1', type: 'mc',
+    q: 'Students ___ bring their own laptops; the school provides one for every student.',
+    options: ["needn't", "mustn't", "'d better", "are supposed to"],
+    answer: 0,
+    explain: "The school already provides laptops, so it's not necessary — \"needn't\"." },
+  { section: 'gram1', type: 'mc',
+    q: "You ___ touch that wire — it's live!",
+    options: ["mustn't", "don't have to", "needn't", "aren't supposed"],
+    answer: 0,
+    explain: "A strong prohibition/warning needs \"mustn't\", not \"don't have to\" (which means simply 'not necessary')." },
+  { section: 'gram1', type: 'mc',
+    q: "Which sentence means the same as \"It's not obligatory to attend the meeting, but it's a good idea\"?",
+    options: ["You must attend the meeting.", "You don't have to attend the meeting.", "You mustn't attend the meeting.", "You're not allowed to attend the meeting."],
+    answer: 1,
+    explain: "\"Not obligatory\" = not necessary = \"don't have to\"." },
+  { section: 'gram1', type: 'mc',
+    q: 'Which of these does NOT express obligation or necessity?',
+    options: ["ought to", "'d better", "needn't", "have to"],
+    answer: 2,
+    explain: "\"needn't\" expresses the absence of necessity — the opposite of the others." },
+
+  // ---- Grammar: perception & sensation ----
+  { section: 'gram2', type: 'mc',
+    q: 'This coffee ___ terrible — did you forget the sugar?',
+    options: ["tastes", "is tasting", "tastes like", "looks"],
+    answer: 0,
+    explain: "\"taste\" + adjective (no \"like\") describes a sensory quality directly." },
+  { section: 'gram2', type: 'mc',
+    q: 'From here, that cloud ___ a rabbit.',
+    options: ["looks", "looks like", "seems", "looks as"],
+    answer: 1,
+    explain: "\"look like\" + noun phrase, to compare its appearance to something." },
+  { section: 'gram2', type: 'mc',
+    q: 'He ___ exhausted after the marathon.',
+    options: ["looks like", "looks", "sounds like", "feels like"],
+    answer: 1,
+    explain: "\"look\" + adjective describes appearance directly, no \"like\" needed." },
+  { section: 'gram2', type: 'mc',
+    q: "It ___ that the flight has been delayed again — there's an announcement being made now.",
+    options: ["sounds", "sounds as if", "sounds like a", "feels"],
+    answer: 1,
+    explain: "Before a clause (subject + verb), use \"sounds as if / as though\"." },
+  { section: 'gram2', type: 'mc',
+    q: "This fabric ___ silk, but it's actually polyester.",
+    options: ["feels like", "feels", "looks", "seems"],
+    answer: 0,
+    explain: "\"feel like\" + noun compares a physical sensation to something else." },
+  { section: 'gram2', type: 'mc',
+    q: "Your plan ___ a great idea — let's do it!",
+    options: ["sounds", "sounds like", "sounds as", "hears"],
+    answer: 1,
+    explain: "Before a noun phrase (\"a great idea\"), you need \"sounds like\", not \"sounds\" alone." },
+  { section: 'gram2', type: 'mc',
+    q: "That new restaurant ___ really popular — there's always a queue.",
+    options: ["seems", "seems like", "seems as", "looks like"],
+    answer: 0,
+    explain: "\"seem\" + adjective (\"popular\") needs no \"like\"." },
+  { section: 'gram2', type: 'mc',
+    q: "I don't know her that well, but she ___ a very kind person.",
+    options: ["seems", "seems like", "looks", "sounds"],
+    answer: 1,
+    explain: "\"seem like\" + noun phrase (\"a very kind person\")." },
+
+  // ---- Vocabulary: prefixes ----
+  { section: 'vocab1', type: 'mc',
+    q: 'I completely ___ him — he turned out to be far kinder than I expected. (judge)',
+    options: ["misjudged", "unjudged", "overjudged", "disjudged"],
+    answer: 0,
+    explain: "mis- = wrongly/incorrectly → misjudge." },
+  { section: 'vocab1', type: 'mc',
+    q: "His handwriting is so bad it's almost ___. (legible)",
+    options: ["unlegible", "illegible", "dislegible", "nonlegible"],
+    answer: 1,
+    explain: "The negative prefix before words starting with 'l' is il- → illegible." },
+  { section: 'vocab1', type: 'mc',
+    q: 'Working night shifts for a month proved extremely ___ for my sleep schedule. (convenient)',
+    options: ["unconvenient", "disconvenient", "inconvenient", "miconvenient"],
+    answer: 2,
+    explain: "in- is the standard negative prefix here → inconvenient." },
+  { section: 'vocab1', type: 'mc',
+    q: 'The council is cracking down on ___ behaviour like littering and loud parties. (social)',
+    options: ["unsocial", "antisocial", "dissocial", "nonsocial"],
+    answer: 1,
+    explain: "anti- = against/opposed to → antisocial (behaviour that harms the community)." },
+  { section: 'vocab1', type: 'mc',
+    q: 'The rescue team was badly ___ for such freezing conditions. (equip)',
+    options: ["unequipped", "misequipped", "under-equipped", "disequipped"],
+    answer: 2,
+    explain: "under- = not enough → under-equipped (didn't have sufficient gear)." },
+  { section: 'vocab1', type: 'mc',
+    q: 'Selling meat that is ___ can make customers seriously ill. (cook)',
+    options: ["misscooked", "undercooked", "discooked", "uncooked"],
+    answer: 1,
+    explain: "under- = not enough (cooked for too little time) → undercooked." },
+  { section: 'vocab1', type: 'mc',
+    q: 'The taxi driver clearly ___ us — the fare was double the normal price. (charge)',
+    options: ["undercharged", "discharged", "overcharged", "recharged"],
+    answer: 2,
+    explain: "over- = too much → overcharged." },
+  { section: 'vocab1', type: 'mc',
+    q: 'The hotel has a lovely ___ pool that\'s only open in summer. (door)',
+    options: ["indoor", "outdoor", "underdoor", "overdoor"],
+    answer: 1,
+    explain: "outdoor = located outside a building." },
+
+  // ---- Vocabulary: art & colour idioms ----
+  { section: 'vocab2', type: 'mc',
+    q: 'A self-portrait is a picture an artist paints of…',
+    options: ["a famous person", "themselves", "a landscape", "an object"],
+    answer: 1,
+    explain: "self- = of oneself, so a self-portrait is an artist's picture of themselves." },
+  { section: 'vocab2', type: 'mc',
+    q: 'Which term describes art that represents recognisable people or objects, as opposed to shapes and colours?',
+    options: ["abstract", "figurative", "installation", "still life"],
+    answer: 1,
+    explain: "\"figurative\" art depicts recognisable subjects; \"abstract\" does not." },
+  { section: 'vocab2', type: 'mc',
+    q: 'A painting of arranged objects like fruit or flowers is called a…',
+    options: ["landscape", "portrait", "still life", "monument"],
+    answer: 2,
+    explain: "\"still life\" = a painting of an arrangement of objects." },
+  { section: 'vocab2', type: 'fill',
+    q: "I hadn't spoken to her in years, then she called me completely out of the ___.",
+    accepted: ["blue"],
+    explain: "\"out of the blue\" = suddenly and unexpectedly." },
+  { section: 'vocab2', type: 'fill',
+    q: "It's almost impossible to get a visa quickly — there's so much red ___ involved.",
+    accepted: ["tape"],
+    explain: "\"red tape\" = excessive official rules and procedures." },
+  { section: 'vocab2', type: 'fill',
+    q: 'Buying a huge car nobody wants is a classic white ___ — expensive and useless.',
+    accepted: ["elephant"],
+    explain: "\"a white elephant\" = a possession that is expensive but useless." },
+  { section: 'vocab2', type: 'fill',
+    q: "Whether the new law is fair is a ___ area — reasonable people disagree.",
+    accepted: ["grey", "gray"],
+    explain: "\"a grey area\" = a situation without clear right/wrong or rules." },
+  { section: 'vocab2', type: 'fill',
+    q: "The story about the missing money turned out to be a red ___ — the real thief was someone else.",
+    accepted: ["herring"],
+    explain: "\"a red herring\" = something that distracts from the real issue." }
+];
+
+const SECTIONS = {
+  gram1: { name: 'Grammar: Permission, obligation & necessity', tag: 'grammar', sub: '8 questions · modal structures' },
+  gram2: { name: 'Grammar: Perception & sensation', tag: 'grammar', sub: '8 questions · look / seem / sound...' },
+  vocab1: { name: 'Vocabulary: Prefixes', tag: 'vocab', sub: '8 questions · mis-, il-, anti-, over-...' },
+  vocab2: { name: 'Vocabulary: Art & colour idioms', tag: 'vocab', sub: '8 questions · art terms + idioms' }
+};
+
+let activeQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = false;
+let wrongQuestions = [];
+
+const setupScreen = document.getElementById('setup-screen');
+const quizScreen = document.getElementById('quiz-screen');
+const resultScreen = document.getElementById('result-screen');
+const sectionList = document.getElementById('section-list');
+
+function renderSetup() {
+  sectionList.innerHTML = '';
+  Object.keys(SECTIONS).forEach(key => {
+    const s = SECTIONS[key];
+    const div = document.createElement('label');
+    div.className = 'section-option';
+    div.innerHTML = `
+      <input type="checkbox" value="${key}" checked>
+      <span>
+        <span class="label">${s.name}</span>
+        <span class="sub">${s.sub}</span>
+      </span>`;
+    sectionList.appendChild(div);
+  });
+}
+renderSetup();
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+document.getElementById('start-btn').addEventListener('click', () => {
+  const checked = Array.from(sectionList.querySelectorAll('input:checked')).map(i => i.value);
+  if (checked.length === 0) { alert('Pick at least one section.'); return; }
+  activeQuestions = shuffle(QUESTIONS.filter(q => checked.includes(q.section)));
+  currentIndex = 0;
+  score = 0;
+  wrongQuestions = [];
+  setupScreen.classList.add('hidden');
+  resultScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  showQuestion();
+});
+
+function showQuestion() {
+  answered = false;
+  const q = activeQuestions[currentIndex];
+  const sec = SECTIONS[q.section];
+  document.getElementById('progress-label').textContent = `Question ${currentIndex + 1} of ${activeQuestions.length}`;
+  document.getElementById('score-label').textContent = `Score: ${score}`;
+  document.getElementById('progress-fill').style.width = `${(currentIndex / activeQuestions.length) * 100}%`;
+  const tagEl = document.getElementById('tag');
+  tagEl.textContent = sec.tag === 'grammar' ? 'Grammar' : 'Vocabulary';
+  tagEl.className = 'tag ' + sec.tag;
+  document.getElementById('q-text').textContent = q.q;
+  document.getElementById('feedback-area').innerHTML = '';
+  document.getElementById('check-btn').classList.remove('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+
+  const area = document.getElementById('answer-area');
+  area.innerHTML = '';
+
+  if (q.type === 'mc') {
+    const optWrap = document.createElement('div');
+    optWrap.className = 'options';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.textContent = opt;
+      btn.dataset.index = i;
+      btn.addEventListener('click', () => {
+        if (answered) return;
+        optWrap.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        btn.classList.add('selected');
+      });
+      optWrap.appendChild(btn);
+    });
+    area.appendChild(optWrap);
+  } else {
+    const input = document.createElement('input');
+    input.className = 'fill-input';
+    input.type = 'text';
+    input.placeholder = 'Type your answer…';
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') checkAnswer(); });
+    area.appendChild(input);
+    setTimeout(() => input.focus(), 50);
+  }
+}
+
+function checkAnswer() {
+  if (answered) return;
+  const q = activeQuestions[currentIndex];
+  let isCorrect = false;
+  const feedbackArea = document.getElementById('feedback-area');
+
+  if (q.type === 'mc') {
+    const selected = document.querySelector('.option.selected');
+    if (!selected) { alert('Choose an answer first.'); return; }
+    const selIndex = parseInt(selected.dataset.index, 10);
+    isCorrect = selIndex === q.answer;
+    document.querySelectorAll('.option').forEach(o => {
+      o.disabled = true;
+      const idx = parseInt(o.dataset.index, 10);
+      if (idx === q.answer) o.classList.add('correct');
+      else if (o === selected) o.classList.add('incorrect');
+    });
+  } else {
+    const input = document.querySelector('.fill-input');
+    const val = input.value.trim().toLowerCase();
+    isCorrect = q.accepted.some(a => a.toLowerCase() === val);
+    input.disabled = true;
+    input.classList.add(isCorrect ? 'correct' : 'incorrect');
+  }
+
+  answered = true;
+  if (isCorrect) {
+    score++;
+  } else {
+    wrongQuestions.push(q);
+  }
+
+  const div = document.createElement('div');
+  div.className = 'feedback ' + (isCorrect ? 'correct' : 'incorrect');
+  const answerText = q.type === 'mc' ? q.options[q.answer] : q.accepted[0];
+  div.innerHTML = `<b>${isCorrect ? 'Correct!' : `Not quite — the answer is "${answerText}"`}</b>${q.explain}`;
+  feedbackArea.appendChild(div);
+
+  document.getElementById('score-label').textContent = `Score: ${score}`;
+  document.getElementById('check-btn').classList.add('hidden');
+  document.getElementById('next-btn').classList.remove('hidden');
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswer);
+
+document.getElementById('next-btn').addEventListener('click', () => {
+  currentIndex++;
+  if (currentIndex >= activeQuestions.length) {
+    showResults();
+  } else {
+    showQuestion();
+  }
+});
+
+function showResults() {
+  quizScreen.classList.add('hidden');
+  resultScreen.classList.remove('hidden');
+  document.getElementById('progress-fill').style.width = '100%';
+
+  document.getElementById('final-score').textContent = `${score}/${activeQuestions.length}`;
+  const pct = Math.round((score / activeQuestions.length) * 100);
+  document.getElementById('final-pct').textContent = `${pct}% correct`;
+
+  const bySection = {};
+  activeQuestions.forEach(q => {
+    if (!bySection[q.section]) bySection[q.section] = { total: 0, correct: 0 };
+    bySection[q.section].total++;
+  });
+  const correctSet = new Set();
+  // Recompute correct-by-section from wrongQuestions (everything not wrong = correct)
+  activeQuestions.forEach((q, i) => {
+    const wasWrong = wrongQuestions.includes(q);
+    if (!wasWrong) bySection[q.section].correct++;
+  });
+
+  const breakdown = document.getElementById('breakdown');
+  breakdown.innerHTML = '';
+  Object.keys(bySection).forEach(key => {
+    const s = bySection[key];
+    const row = document.createElement('div');
+    row.className = 'breakdown-row';
+    row.innerHTML = `<span>${SECTIONS[key].name}</span><span class="pct">${s.correct}/${s.total}</span>`;
+    breakdown.appendChild(row);
+  });
+
+  document.getElementById('retry-wrong-btn').classList.toggle('hidden', wrongQuestions.length === 0);
+}
+
+document.getElementById('retry-wrong-btn').addEventListener('click', () => {
+  activeQuestions = shuffle(wrongQuestions);
+  wrongQuestions = [];
+  currentIndex = 0;
+  score = 0;
+  resultScreen.classList.add('hidden');
+  quizScreen.classList.remove('hidden');
+  showQuestion();
+});
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+  resultScreen.classList.add('hidden');
+  setupScreen.classList.remove('hidden');
+});
+</script>
+</body>
+</html>
